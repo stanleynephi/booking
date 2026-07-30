@@ -1,0 +1,7 @@
+##files and components to ignore when commiting files to github
+#node modules are ignored
+node_modules
+
+
+#.env
+.env
