@@ -5,12 +5,17 @@ const express = require("express")
 const app = express()
 const port = process.env.PORT
 
+//databse url to test the database connection
+const supabase = require("./database/supabaseClient")
+
 //import the router and then test it
 const routes = require("./routes/routes")
 
 //start the application home page
-app.get("/", (req, res) => {
-  res.send("This is the homepage of the api we are building..")
+app.get("/", async (req, res) => {
+  const { data, error } = await supabase.from("shops").select("*")
+  if (error) return res.status(500).json({ error: error.message })
+  res.json(data)
 })
 
 //start the first application routes to the shops
