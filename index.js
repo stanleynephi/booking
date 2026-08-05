@@ -9,13 +9,11 @@ const port = process.env.PORT
 const supabase = require("./database/supabaseClient")
 
 //import the router and then test it
-const routes = require("./routes/routes")
+const routes = require("./routes/shoproutes")
 
 //start the application home page
 app.get("/", async (req, res) => {
-  const { data, error } = await supabase.from("shops").select("*")
-  if (error) return res.status(500).json({ error: error.message })
-  res.json(data)
+  res.send("This is the backend service for booking")
 })
 
 //start the first application routes to the shops

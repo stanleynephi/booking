@@ -1,6 +1,4 @@
-
 -- database recreate file for backup
-
 
 
 create table shop_owners (
