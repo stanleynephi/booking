@@ -4,14 +4,14 @@ const express = require("express")
 const router = express.Router()
 const error = require("../utils/index")
 const controller = require("../controller/shopcontroller")
+const authenticate = require("../utils/middleware")
 
 //router.get.. fetch all the shop data from the data
-router.get("/allshops", controller.getAllShop)
+//prorcess.. when route is hit, firt check if authenticated before hiting the controller
+router.get("/allshops", authenticate.requireAuth, controller.getAllShop)
 
 //get shop by id
-router.get("/getshop/:id", (req, res) => {
-  res.send("this get method gets all shop data based on the id provided")
-})
+router.get("/getshop/:id", controller.getShopById)
 
 //post to add new shope data to the system
 router.post("/newshop", (req, res) => {

@@ -12,10 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "@supabase/server": "^1.4.1",
-    "@supabase/supabase-js": "^2.111.0",
+    "@supabase/supabase-js": "^2.112.3",
     "add": "^2.0.9",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-validator": "^7.3.2",
     "nodemon": "^3.1.14",
     "pg": "^8.22.0",
     "skills": "^1.5.21",
