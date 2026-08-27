@@ -5,22 +5,6 @@ const shopValidation = {}
 // Rules for POST /api/shops (creating a new shop)
 shopValidation.createShops = () => {
   return [
-    //owners id validation.. this will be passed from when the owner logs in.
-    body("owner_id")
-      .notEmpty()
-      .withMessage("owner_id is required")
-      .isUUID()
-      .withMessage("owner_id must be a valid UUID"),
-
-    body("slug")
-      .trim()
-      .notEmpty()
-      .withMessage("slug is required")
-      .matches(/^[a-z0-9]+(-[a-z0-9]+)*$/)
-      .withMessage(
-        "slug must be lowercase letters, numbers, and hyphens only (e.g. prime-cuts)",
-      ),
-
     body("name")
       .trim()
       .notEmpty()

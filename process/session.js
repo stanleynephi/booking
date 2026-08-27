@@ -1,14 +1,6 @@
 // create and handle sessions for user logins and logouts
 
 function setSessionCookies(res, session) {
-  console.log("========== SETTING SESSION COOKIES ==========")
-
-  console.log("Access token exists:", !!session?.access_token)
-  console.log("Refresh token exists:", !!session?.refresh_token)
-
-  console.log("Access token length:", session?.access_token?.length)
-  console.log("Refresh token length:", session?.refresh_token?.length)
-
   res.cookie("sb-access-token", session.access_token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

@@ -11,9 +11,12 @@ const routes = require("./routes/shoproutes")
 const loginroutes = require("./routes/authRoutes")
 
 app.use(express.json())
+// Parse HTML form submissions
+app.use(express.urlencoded({ extended: true }))
+
 app.use(cookieParser())
 
-//start the application home page
+//start the application home page...
 app.get("/", async (req, res) => {
   res.send("This is the backend service for booking")
 })
