@@ -5,7 +5,6 @@ async function requireAuth(req, res, next) {
   //get the current url create a cookie to store the url
   const currentURL = req.originalUrl
 
-  console.log("this is the user curent url", currentURL)
   //cookie to store the url
   res.cookie("post-login-redirect", currentURL, {
     //set up the cookie parameter

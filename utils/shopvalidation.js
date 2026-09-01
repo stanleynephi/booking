@@ -12,11 +12,9 @@ shopValidation.createShops = () => {
       .isLength({ min: 2, max: 100 })
       .withMessage("name must be between 2 and 100 characters"),
 
-    body("category")
-      .notEmpty()
-      .withMessage("category is required")
-      .isIn(VALID_CATEGORIES)
-      .withMessage(`category must be one of: ${VALID_CATEGORIES.join(", ")}`),
+    body("category").notEmpty().withMessage("category is required"),
+    // .isIn(VALID_CATEGORIES),
+    // .withMessage(`category must be one of: ${VALID_CATEGORIES.join(", ")}`),
 
     body("description")
       .optional({ nullable: true })
