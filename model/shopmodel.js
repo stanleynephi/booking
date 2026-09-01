@@ -130,7 +130,7 @@ shopmodel.getshopbyOwner_ID = async function (ownerID) {
   }
 }
 
-//delete shop data from the database
+//delete individual shops data from the database
 shopmodel.deleteShop = async function (id, ownerID) {
   try {
     //delete the shop data from the database based on the shop id provided..
@@ -156,4 +156,4 @@ shopmodel.deleteShop = async function (id, ownerID) {
 }
 
 //module export
-shop.module.exports = shopmodel
+module.exports = shopmodel
