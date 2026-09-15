@@ -16,7 +16,7 @@ async function requireAuth(req, res, next) {
   })
 
   //re-route to the login route if there is no token
-  if (!token) return res.redirect("/api/auth/google")
+  if (!token) return res.redirect("/auth/google")
 
   const { data, error } = await supabase.auth.getUser(token)
   if (error || !data.user) {

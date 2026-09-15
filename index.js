@@ -3,6 +3,7 @@ require("dotenv").config()
 
 const express = require("express")
 const app = express()
+const cors = require("cors")
 const port = process.env.PORT
 const cookieParser = require("cookie-parser")
 const authenticate = require("./utils/middleware")
@@ -13,10 +14,12 @@ const loginroutes = require("./routes/authRoutes")
 const ownerroutes = require("./routes/ownerRoutes")
 
 app.use(express.json())
-// Parse HTML form submissions
-app.use(express.urlencoded({ extended: true }))
+// // Parse HTML form submissions
+// app.use(express.urlencoded({ extended: true }))
 
 app.use(cookieParser())
+
+// app.use(cors())
 
 //start the application home page...
 app.get("/", async (req, res) => {
@@ -24,7 +27,7 @@ app.get("/", async (req, res) => {
 })
 
 //start the first application routes to the shops
-app.use("/api/auth", loginroutes)
+app.use("/auth/", loginroutes)
 app.use("/shops", authenticate.requireAuth, routes)
 app.use("/owner", authenticate.requireAuth, ownerroutes)
 

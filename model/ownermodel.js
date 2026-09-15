@@ -32,8 +32,8 @@ clientmodel.userinformation = async function (id) {
 //delete the owners account and the shops details
 clientmodel.deleteclient = async function (id) {
   //delete all shops in the database where the id is equal to the user id provided
-  const { error: dbError } = await supabase
-    .from("shops_owners")
+  const { data, error: dbError } = await supabase
+    .from("shop_owners")
     .delete()
     .eq("id", id)
 

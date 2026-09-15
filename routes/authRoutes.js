@@ -5,6 +5,6 @@ const router = express.Router()
 
 //get router
 router.get("/google", controller.googleLogin)
-router.get("/callback", controller.oauthCallback)
+router.get("/v1/callback", controller.oauthCallback)
 
 module.exports = router

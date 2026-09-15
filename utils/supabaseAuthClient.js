@@ -1,28 +1,28 @@
 const { createClient } = require("@supabase/supabase-js")
+require("dotenv").config()
 
 function createAuthClient(req, res) {
-  console.log("createAuthClient called")
   return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY, {
     auth: {
+      detectSessionInUrl: false,
       flowType: "pkce",
       autoRefreshToken: false,
       persistSession: true,
-      detectSessionInUrl: false,
+      experimental: { appendPkceFlowIdToRedirects: true },
 
       storage: {
         getItem: (key) => {
-          console.log("GET COOKIE:", key)
-          console.log("AVAILABLE COOKIES:", req.cookies)
+          const cookies = req.cookies || {}
 
-          return req.cookies?.[key] || null
+          const value = cookies[key]
+
+          return value || null
         },
 
         setItem: (key, value) => {
-          console.log("SET COOKIE:", key)
-
           res.cookie(key, value, {
             httpOnly: true,
-            secure: false, // development
+            secure: false,
             sameSite: "lax",
             maxAge: 5 * 60 * 1000,
             path: "/",
@@ -30,8 +30,6 @@ function createAuthClient(req, res) {
         },
 
         removeItem: (key) => {
-          console.log("REMOVE COOKIE:", key)
-
           res.clearCookie(key, {
             path: "/",
           })

@@ -6,7 +6,7 @@
 const express = require("express")
 const router = express.Router()
 const error = require("../utils/index")
-const controller = require("../controller/shopcontroller")
+const controller = require("../controller/shopController")
 const authenticate = require("../utils/middleware")
 const validationRules = require("../utils/shopvalidation")
 
