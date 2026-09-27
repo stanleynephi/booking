@@ -31,22 +31,19 @@ async function getuserInformation(req, res) {
 
 async function deleteUser(req, res) {
   try {
+    console.log("======DELETE ROUTE HIT FOR THE DELETE CONTROLLER=======")
     //get the user id from the session
     const owner_id = req.owner.id
+    //console log the owner id gotten from the cookie
+    console.log("This is the user id to be deleted", owner_id)
 
     if (!owner_id) {
       throw new Error("no user id provided for referencing")
     }
 
+    //delete the user data first and then delete the oauth user
     const deleteUserInformation = await model.deleteclient(owner_id)
-
-    //if the user deletes works then go ahead and delete the auth
-    if (!deleteUserInformation) {
-      //go ahead and delete the auth
-      return res.status(404).json({ error: "Owner not found" })
-    }
-
-    await model.authdeletion(owner_id)
+    const deleteoauth = await model.authdeletion(owner_id)
 
     res.clearCookie("sb-access-token")
     res.clearCookie("sb-refresh-token")
@@ -57,7 +54,38 @@ async function deleteUser(req, res) {
   }
 }
 
+//signout user controller
+async function signout(req, res) {
+  //try catch....
+  try {
+    //gets the accessToken from the cookie
+    const accessToken = req.cookies["sb-access-token"]
+    console.log("This is the access token", accessToken)
+
+    if (!accessToken) {
+      // nothing to revoke server-side, but still clear cookies client-side and proceed
+      res.clearCookie("sb-access-token")
+      res.clearCookie("sb-refresh-token")
+      return res.redirect("/")
+    }
+
+    //datbase model to delete the accessToken from the database
+    const signedOutSuccessfully = await model.logout(accessToken)
+
+    if (!signedOutSuccessfully) {
+      console.log("Server-side revocation failed, but clearing cookies anyway")
+    }
+
+    res.clearCookie("sb-access-token")
+    res.clearCookie("sb-refresh-token")
+    res.redirect("/")
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
 module.exports = {
   getuserInformation,
   deleteUser,
+  signout,
 }

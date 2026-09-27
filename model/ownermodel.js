@@ -31,6 +31,9 @@ clientmodel.userinformation = async function (id) {
 
 //delete the owners account and the shops details
 clientmodel.deleteclient = async function (id) {
+  //console log the client id
+  console.log("=======client delete route hit======")
+  console.log("this is the id for the client", id)
   //delete all shops in the database where the id is equal to the user id provided
   const { data, error: dbError } = await supabase
     .from("shop_owners")
@@ -39,11 +42,14 @@ clientmodel.deleteclient = async function (id) {
 
   if (dbError) throw dbError
 
-  return data && data.length > 0
+  return true
 }
 
 //delete the user authentication from the supabase authentication process
 clientmodel.authdeletion = async function (id) {
+  //console log the id pass into this function
+  console.log("=======auth user deletion hit=======")
+  console.log("this is the id provided", id)
   //delete the authentication information from the database
   const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(id)
 
@@ -52,4 +58,19 @@ clientmodel.authdeletion = async function (id) {
   return true
 }
 
+//client logout process...
+//this process looks for the access tokens and the refresh tokens and deletes them..
+clientmodel.logout = async function (accessToken) {
+  //console log that the signout route has been hit and then run the signout process
+  console.log("========signout model has been hit=========")
+  //use the admin client rather to delete this
+  const { error } = await supabaseAdmin.auth.admin.signOut(accessToken)
+
+  if (error) {
+    console.log("There is an error in the logging out the user", error)
+    return false
+  }
+
+  return true
+}
 module.exports = clientmodel

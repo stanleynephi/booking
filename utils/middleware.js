@@ -2,8 +2,6 @@ const supabase = require("../database/supabaseClient")
 
 async function requireAuth(req, res, next) {
   const token = req.cookies["sb-access-token"]
-  //get the current url create a cookie to store the url
-  const currentURL = req.originalUrl
 
   //cookie to store the url
   res.cookie("post-login-redirect", currentURL, {
@@ -26,5 +24,4 @@ async function requireAuth(req, res, next) {
   req.owner = data.user
   next()
 }
-
 module.exports = { requireAuth }
