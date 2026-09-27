@@ -8,6 +8,8 @@ router.get("/profile", controller.getuserInformation)
 //update owner data
 
 //delete owner data
-router.delete("/profile/delete", controller.deleteUser)
+router.delete("/delete/user", controller.deleteUser)
 
+//signout user from the application
+router.get("/signout", controller.signout)
 module.exports = router

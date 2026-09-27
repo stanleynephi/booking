@@ -16,16 +16,11 @@ async function googleLogin(req, res) {
     },
   })
 
-  console.log("OAuth data:", data)
-  console.log("OAuth error:", error)
-
   if (error) {
     return res.status(400).json({
       error: error.message,
     })
   }
-
-  console.log("OAuth URL:", data?.url)
 
   res.redirect(data.url)
 }
