@@ -35,7 +35,7 @@ clientmodel.deleteclient = async function (id) {
   console.log("=======client delete route hit======")
   console.log("this is the id for the client", id)
   //delete all shops in the database where the id is equal to the user id provided
-  const { error: dbError } = await supabase
+  const { data, error: dbError } = await supabase
     .from("shop_owners")
     .delete()
     .eq("id", id)

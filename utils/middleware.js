@@ -3,16 +3,18 @@ const supabase = require("../database/supabaseClient")
 async function requireAuth(req, res, next) {
   const token = req.cookies["sb-access-token"]
 
-  if (!token) {
-    res.cookie("post-login-redirect", req.originalUrl, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 5 * 60 * 1000,
-      path: "/",
-    })
-    return res.redirect("/api/auth/google")
-  }
+  //cookie to store the url
+  res.cookie("post-login-redirect", currentURL, {
+    //set up the cookie parameter
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 5 * 60 * 1000,
+    path: "/",
+  })
+
+  //re-route to the login route if there is no token
+  if (!token) return res.redirect("/auth/google")
 
   const { data, error } = await supabase.auth.getUser(token)
   if (error || !data.user) {

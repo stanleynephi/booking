@@ -1,6 +1,6 @@
 //controller to estabalish database connection and send data to and from the database
 const database = require("../database/supabaseClient")
-const model = require("../model/shopmodel")
+const model = require("../model/shopModel")
 
 //controller to add new shop data to the database
 async function addNewShop(req, res) {
