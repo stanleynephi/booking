@@ -87,11 +87,17 @@ async function oauthCallback(req, res) {
   }
 
   //after authenticating.. get the cookie data and then pass that as the redirect url
-  const redirectTargert = req.cookies["post-login-redirect"]
-  console.log("this is the redirect url", redirectTargert)
+  const redirectTarget = req.cookies["post-login-redirect"]
+  res.clearCookie("post-login-redirect", { path: "/" })
 
-  console.log(redirectTargert)
-  res.redirect(`${process.env.API_BASE_URL}${redirectTargert}`)
+  const safeRedirect =
+    typeof redirectTarget === "string" &&
+    redirectTarget.startsWith("/") &&
+    !redirectTarget.startsWith("//")
+      ? redirectTarget
+      : "/"
+
+  res.redirect(`${process.env.API_BASE_URL}${safeRedirect}`)
 }
 
 //export these to the route
